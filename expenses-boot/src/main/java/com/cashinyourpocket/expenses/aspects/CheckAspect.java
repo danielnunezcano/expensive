@@ -48,16 +48,16 @@ public class CheckAspect {
     LOGGER.debug("Return to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
   }
 
-  @AfterReturning(pointcut="execution(* com.cashinyourpocket.expenses.apirest.controller.*.*(..)) || "
-      + "execution(* com.cashinyourpocket.expenses.application.service.*.*(..))", returning="retVal")
-  public void logAfterReturningService(Object retVal) {
-    if(retVal instanceof ResponseEntity){
-      ResponseEntity responseEntity = (ResponseEntity)retVal;
-      LOGGER.debug(new Gson().toJson(responseEntity.getBody()));
-    } else {
-      LOGGER.debug(new Gson().toJson(retVal));
-    }
-
-  }
+//  @AfterReturning(pointcut="execution(* com.cashinyourpocket.expenses.apirest.controller.*.*(..)) || "
+//      + "execution(* com.cashinyourpocket.expenses.application.service.*.*(..))", returning="retVal")
+//  public void logAfterReturningService(Object retVal) {
+//    if(retVal instanceof ResponseEntity){
+//      ResponseEntity responseEntity = (ResponseEntity)retVal;
+//      LOGGER.debug(new Gson().toJson(responseEntity.getBody()));
+//    } else {
+//      LOGGER.debug(new Gson().toJson(retVal));
+//    }
+//
+//  }
 
 }
