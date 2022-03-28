@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.annotation.After;
@@ -28,7 +27,7 @@ public class CheckAspect {
     LOGGER.info("Before to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
     Arrays.stream(joinPoint.getArgs()).forEach(arg -> {
       try{
-        LOGGER.info("Arg: {}",new Gson().toJson(arg));
+        LOGGER.info("Arg: {}",arg);
       } catch (Exception ex) {
         LOGGER.info("Arg: ");
       }
@@ -53,9 +52,9 @@ public class CheckAspect {
   public void logAfterReturningService(Object retVal) {
     if(retVal instanceof ResponseEntity){
       ResponseEntity responseEntity = (ResponseEntity)retVal;
-      LOGGER.info(new Gson().toJson(responseEntity.getBody()));
+      LOGGER.info(responseEntity.getBody());
     } else {
-      LOGGER.info(new Gson().toJson(retVal));
+      LOGGER.info(retVal);
     }
 
   }

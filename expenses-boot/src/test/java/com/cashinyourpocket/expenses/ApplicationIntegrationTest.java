@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,7 +78,7 @@ public class ApplicationIntegrationTest {
         .andExpect(status().isOk())
         .andReturn();
     String content = result.getResponse().getContentAsString();
-    return new Gson().fromJson(content, ResponseTokenTest.class);
+    return ResponseTokenTest.builder().token(content.split("\"")[3]).build();
   }
 
 
