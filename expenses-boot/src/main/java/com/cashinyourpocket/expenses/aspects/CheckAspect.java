@@ -3,6 +3,7 @@ package com.cashinyourpocket.expenses.aspects;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,12 @@ public class CheckAspect {
         LOGGER.debug("Arg: ");
       }
     });
+  }
+
+  @Before("@annotation(com.cashinyourpocket.expenses.apirest.auth.CheckLogin)")
+  public void beforeLogin(JoinPoint joinPoint) {
+    JwtRequest authenticationRequest = (JwtRequest) joinPoint.getArgs()[0];
+    LOGGER.debug("Login User: {}",authenticationRequest.getUsername());
   }
 
   @After("execution(* com.cashinyourpocket.expenses.apirest.controller.*.*(..)) || "

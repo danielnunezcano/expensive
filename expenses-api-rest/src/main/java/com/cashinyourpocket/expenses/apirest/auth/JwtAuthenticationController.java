@@ -1,6 +1,6 @@
-package com.cashinyourpocket.expenses.apirest.controller;
+package com.cashinyourpocket.expenses.apirest.auth;
 
-import com.cashinyourpocket.expenses.application.service.JwtUserDetailsService;
+import com.cashinyourpocket.expenses.application.auth.JwtUserDetailsService;
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.cashinyourpocket.expenses.application.user.model.JwtResponse;
 import com.cashinyourpocket.expenses.application.user.JwtTokenUtil;
@@ -28,6 +28,7 @@ public class JwtAuthenticationController {
 
 	private final JwtUserDetailsService userDetailsService;
 
+	@CheckLogin
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 

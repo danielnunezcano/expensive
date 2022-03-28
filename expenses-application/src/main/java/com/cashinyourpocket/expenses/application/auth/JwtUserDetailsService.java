@@ -1,4 +1,4 @@
-package com.cashinyourpocket.expenses.application.service;
+package com.cashinyourpocket.expenses.application.auth;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package com.cashinyourpocket.expenses.application.user;
 
 import java.io.IOException;
 
-import com.cashinyourpocket.expenses.application.service.JwtUserDetailsService;
+import com.cashinyourpocket.expenses.application.auth.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
