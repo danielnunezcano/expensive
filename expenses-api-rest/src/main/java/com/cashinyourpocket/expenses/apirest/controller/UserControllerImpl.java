@@ -8,12 +8,16 @@ import com.cashinyourpocket.expenses.application.service.UsuariosService;
 import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
+
+  private static final Logger LOGGER = LogManager.getLogger(UserControllerImpl.class);
 
   private final UsuariosService usuariosService;
   private final JwtRequestFilter jwtRequestFilter;
