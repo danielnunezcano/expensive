@@ -1,2 +1,6 @@
+logging:
+  level:
+    root: info
+
 jwt:
   secret: tENePUDG8Zmt4HDcf8QpvcL7rAVKb4RtWzjkRtSfSs3iAqM6QUEHGMobuf2UZ3UwWtFMyY7gMUFjQMJcVN8FmmzRtXZgs4UWosKEj9q5eYQ9pUmRaAtVUyphFoBYVzag
