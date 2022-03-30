@@ -6,12 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.cashinyourpocket.expenses.apirest.dto.UserSecurityDto;
+import com.cashinyourpocket.expenses.apirest.auth.controller.UserController;
 import com.cashinyourpocket.expenses.application.service.UsuariosService;
 import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
 import com.cashinyourpocket.expenses.data.model.UserSecurity;
 import javax.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -26,7 +25,7 @@ public class UserControllerTest {
   private final UsuariosService usuariosService = mock(UsuariosService.class);
   private final JwtRequestFilter jwtRequestFilter = mock(JwtRequestFilter.class);
 
-  private final UserController sut = new UserControllerImpl(usuariosService, jwtRequestFilter);
+  private final UserController sut = new UserController(usuariosService, jwtRequestFilter);
 
   @Test
   public void getUserOK() {
