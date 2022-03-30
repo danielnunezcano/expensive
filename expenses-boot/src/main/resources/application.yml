@@ -4,7 +4,6 @@ logging:
 
 spring:
   datasource:
-    // jdbc:mariadb://eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/a2uz1lfpgvt4f4iy
     url: mysql://eop5t7cnjsxzbqtx:ur1nahpcrgx969kf@eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/a2uz1lfpgvt4f4iy
     username: eop5t7cnjsxzbqtx
     password: ur1nahpcrgx969kf
