@@ -17,6 +17,10 @@
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.cashinyourpocket</groupId>
+      <artifactId>expenses-domain</artifactId>
+    </dependency>
   </dependencies>
 
   <properties>

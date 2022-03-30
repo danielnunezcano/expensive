@@ -16,6 +16,6 @@ public class UserData {
   private String username;
   private String name;
   private String surname;
-  private String role;
+  private Integer role;
 
 }

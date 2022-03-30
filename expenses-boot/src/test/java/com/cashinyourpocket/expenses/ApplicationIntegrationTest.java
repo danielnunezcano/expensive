@@ -27,7 +27,7 @@ public class ApplicationIntegrationTest {
 
   private static final String USERNAME = "daniel@gmail.com";
   private static final String PASSWORD = "password";
-  private static final String ROL = "USER";
+  private static final Integer ROL = 1;
 
   private final MockMvc mockMvc;
 

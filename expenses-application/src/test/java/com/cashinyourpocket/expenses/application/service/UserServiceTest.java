@@ -1,33 +1,57 @@
 package com.cashinyourpocket.expenses.application.service;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
-import com.cashinyourpocket.expenses.data.model.UserSecurity;
-import javax.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.cashinyourpocket.expenses.data.model.UserJpa;
+import com.cashinyourpocket.expenses.data.repository.UserRepository;
+import com.cashinyourpocket.expenses.expections.CustomException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
+  @InjectMocks
+  private UserServiceImpl userService;
+
   @Mock
-  private HttpServletRequest httpServletRequest;
+  private UserRepository userRepository;
 
-  private static final String USER = "user";
-  private static final String ROL = "USER";
-
-  private final UsuariosService sut = new UsuariosServiceImpl();
+  private static final String USER = "daniel@gmail.com";
+  private static final Integer ROL = 1;
 
   @Test
   public void getUserOK() {
-    UserSecurity userSecurity = UserSecurity.builder().user(USER).rol(ROL).build();
+    List<UserJpa> userList = new ArrayList<>();
+    userList.add(UserJpa.builder().id(1).username(USER).role(ROL).build());
 
-    sut.getUser(USER);
+    when(userRepository.findByUsername(any())).thenReturn(userList);
 
-    sut.getUser(USER).equals(userSecurity);
+    UserJpa user = userService.getUser(USER);
+    Assertions.assertEquals(USER,user.getUsername());
+
+  }
+
+  @Test
+  public void userNotExist() {
+    List<UserJpa> userList = new ArrayList<>();
+
+    when(userRepository.findByUsername(any())).thenReturn(userList);
+
+    try{
+      userService.getUser(USER);
+      Assertions.assertTrue(Boolean.FALSE);
+    } catch (CustomException ex) {
+      Assertions.assertTrue(Boolean.TRUE);
+    }
 
   }
 

@@ -5,11 +5,10 @@ import java.util.Optional;
 import com.cashinyourpocket.expenses.apirest.dto.AuthResponse;
 import com.cashinyourpocket.expenses.apirest.mapper.UserMapper;
 import com.cashinyourpocket.expenses.application.auth.JwtUserDetailsService;
-import com.cashinyourpocket.expenses.application.service.UsuariosService;
-import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
+import com.cashinyourpocket.expenses.application.service.UserService;
+import com.cashinyourpocket.expenses.application.user.JwtTokenUtil;
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.cashinyourpocket.expenses.application.user.model.JwtResponse;
-import com.cashinyourpocket.expenses.application.user.JwtTokenUtil;
 import com.cashinyourpocket.expenses.application.user.model.UserData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,40 +28,42 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class JwtAuthenticationController {
 
-	private final UsuariosService usuariosService;
+  private final UserService usuariosService;
 
-	private final JwtRequestFilter jwtRequestFilter;
+  private final AuthenticationManager authenticationManager;
 
-	private final AuthenticationManager authenticationManager;
+  private final JwtTokenUtil jwtTokenUtil;
 
-	private final JwtTokenUtil jwtTokenUtil;
+  private final JwtUserDetailsService userDetailsService;
 
-	private final JwtUserDetailsService userDetailsService;
+  private final UserService userService;
 
-	@CheckLogin
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+  @CheckLogin
+  @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+  public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final UserData userData = UserMapper.userDetailstoUserData((UserDetails) userDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername()));
+    UserData userData = userService.loginUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final String token = jwtTokenUtil.generateToken(userData);
-		ResponseEntity.of(Optional.of(UserMapper.toUserSecurityDto(usuariosService.getUser(userData.getUsername()))));
+//    final UserData userData2 = UserMapper.userDetailstoUserData((UserDetails) userDetailsService
+//        .loadUserByUsername(authenticationRequest.getUsername()));
 
-		final AuthResponse response = AuthResponse.builder().userData(userData).jwt(new JwtResponse(token)).build();
+    final String token = jwtTokenUtil.generateToken(userData);
+    //ResponseEntity.of(Optional.of(UserMapper.toUserSecurityDto(usuariosService.getUser(userData.getUsername()))));
 
-		return ResponseEntity.ok(response);
-	}
+    final AuthResponse response = AuthResponse.builder().userData(userData).jwt(new JwtResponse(token)).build();
 
-	private void authenticate(String email, String password) throws Exception {
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
+    return ResponseEntity.ok(response);
+  }
+
+  private void authenticate(String email, String password) throws Exception {
+    try {
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+    } catch (DisabledException e) {
+      throw new Exception("USER_DISABLED", e);
+    } catch (BadCredentialsException e) {
+      throw new Exception("INVALID_CREDENTIALS", e);
+    }
+  }
 }

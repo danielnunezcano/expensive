@@ -2,5 +2,11 @@ logging:
   level:
     root: info
 
+spring.datasource.url: jdbc:mariadb://eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/a2uz1lfpgvt4f4iy
+spring.datasource.username: eop5t7cnjsxzbqtx
+spring.datasource.password: ur1nahpcrgx969kf
+spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
+spring.jpa.hibernate.ddl-auto: validate
+
 jwt:
   secret: tENePUDG8Zmt4HDcf8QpvcL7rAVKb4RtWzjkRtSfSs3iAqM6QUEHGMobuf2UZ3UwWtFMyY7gMUFjQMJcVN8FmmzRtXZgs4UWosKEj9q5eYQ9pUmRaAtVUyphFoBYVzag

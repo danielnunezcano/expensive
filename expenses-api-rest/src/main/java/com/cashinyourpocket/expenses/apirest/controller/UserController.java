@@ -1,10 +1,10 @@
-package com.cashinyourpocket.expenses.apirest.auth.controller;
+package com.cashinyourpocket.expenses.apirest.controller;
 
 import java.util.Optional;
 
 import com.cashinyourpocket.expenses.apirest.dto.UserSecurityDto;
 import com.cashinyourpocket.expenses.apirest.mapper.UserMapper;
-import com.cashinyourpocket.expenses.application.service.UsuariosService;
+import com.cashinyourpocket.expenses.application.service.UserService;
 import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class UserController {
 
   private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
-  private final UsuariosService usuariosService;
+  private final UserService usuariosService;
   private final JwtRequestFilter jwtRequestFilter;
 
   @RequestMapping(value = "/user", method = RequestMethod.GET)
