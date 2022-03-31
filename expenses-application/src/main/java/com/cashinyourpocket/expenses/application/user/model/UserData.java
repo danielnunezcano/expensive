@@ -1,19 +1,21 @@
-package com.cashinyourpocket.expenses.apirest.dto;
+package com.cashinyourpocket.expenses.application.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class UserSecurityDto {
-  private String user;
-  private String rol;
+public class UserData {
+
+  private String username;
+  private String name;
+  private String surname;
+  private Integer role;
+
 }

@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +25,9 @@ import org.springframework.test.web.servlet.MvcResult;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ApplicationIntegrationTest {
 
-  private static final String USER = "daniel";
+  private static final String USERNAME = "daniel@gmail.com";
   private static final String PASSWORD = "password";
-  private static final String ROL = "USER";
+  private static final Integer ROL = 1;
 
   private final MockMvc mockMvc;
 
@@ -36,13 +35,13 @@ public class ApplicationIntegrationTest {
 
   @Test
   public void shouldGetUser() throws Exception {
-    final ResponseTokenTest responseTokenTest = authentication(USER,PASSWORD);
+    final ResponseTokenTest responseTokenTest = authentication(USERNAME,PASSWORD);
     String basicAuthorization = "Bearer ".concat(responseTokenTest.getToken());
     mockMvc.perform(get("/user").header("Authorization", basicAuthorization)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.user").value(USER))
+        .andExpect(jsonPath("$.user").value(USERNAME))
         .andExpect(jsonPath("$.rol").value(ROL));
   }
 
@@ -64,7 +63,7 @@ public class ApplicationIntegrationTest {
 
   @Test
   public void shouldErrorWhenPasswordIsWrong() throws Exception {
-    final String jsonContent = objectMapper.writeValueAsString(new JwtRequest(USER, "pass"));
+    final String jsonContent = objectMapper.writeValueAsString(new JwtRequest(USERNAME, "pass"));
     mockMvc.perform(post("/authenticate")
             .content(jsonContent)
             .contentType(MediaType.APPLICATION_JSON))
@@ -79,7 +78,7 @@ public class ApplicationIntegrationTest {
         .andExpect(status().isOk())
         .andReturn();
     String content = result.getResponse().getContentAsString();
-    return new Gson().fromJson(content, ResponseTokenTest.class);
+    return ResponseTokenTest.builder().token(content.split("\"")[content.split("\"").length-2]).build();
   }
 
 

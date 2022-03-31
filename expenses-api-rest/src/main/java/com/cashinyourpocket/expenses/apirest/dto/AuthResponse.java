@@ -1,5 +1,7 @@
 package com.cashinyourpocket.expenses.apirest.dto;
 
+import com.cashinyourpocket.expenses.application.user.model.JwtResponse;
+import com.cashinyourpocket.expenses.application.user.model.UserData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserSecurityDto {
-  private String user;
-  private String rol;
+public class AuthResponse {
+  private UserData userData;
+  private JwtResponse jwt;
 }

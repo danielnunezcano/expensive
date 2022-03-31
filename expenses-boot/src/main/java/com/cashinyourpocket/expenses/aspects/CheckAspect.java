@@ -3,7 +3,7 @@ package com.cashinyourpocket.expenses.aspects;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gson.Gson;
+import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.annotation.After;
@@ -24,21 +24,27 @@ public class CheckAspect {
       + "execution(* com.cashinyourpocket.expenses.application.service.*.*(..))")
   public void beforeController(JoinPoint joinPoint) {
     List<String> splitName = Arrays.asList(joinPoint.getTarget().getClass().getName().split("\\."));
-    LOGGER.debug("Before to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
+    LOGGER.info("Before to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
     Arrays.stream(joinPoint.getArgs()).forEach(arg -> {
       try{
-        LOGGER.debug("Arg: {}",new Gson().toJson(arg));
+        LOGGER.info("Arg: {}",arg);
       } catch (Exception ex) {
-        LOGGER.debug("Arg: ");
+        LOGGER.info("Arg: ");
       }
     });
+  }
+
+  @Before("@annotation(com.cashinyourpocket.expenses.apirest.auth.CheckLogin)")
+  public void beforeLogin(JoinPoint joinPoint) {
+    JwtRequest authenticationRequest = (JwtRequest) joinPoint.getArgs()[0];
+    LOGGER.info("Login User: {}",authenticationRequest.getUsername());
   }
 
   @After("execution(* com.cashinyourpocket.expenses.apirest.controller.*.*(..)) || "
       + "execution(* com.cashinyourpocket.expenses.application.service.*.*(..))")
   public void afterController(JoinPoint joinPoint) {
     List<String> splitName = Arrays.asList(joinPoint.getTarget().getClass().getName().split("\\."));
-    LOGGER.debug("Return to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
+    LOGGER.info("Return to {}.{}",splitName.get(splitName.size()-1),joinPoint.getSignature().getName());
   }
 
   @AfterReturning(pointcut="execution(* com.cashinyourpocket.expenses.apirest.controller.*.*(..)) || "
@@ -46,9 +52,9 @@ public class CheckAspect {
   public void logAfterReturningService(Object retVal) {
     if(retVal instanceof ResponseEntity){
       ResponseEntity responseEntity = (ResponseEntity)retVal;
-      LOGGER.debug(new Gson().toJson(responseEntity.getBody()));
+      LOGGER.info(responseEntity.getBody());
     } else {
-      LOGGER.debug(new Gson().toJson(retVal));
+      LOGGER.info(retVal);
     }
 
   }
