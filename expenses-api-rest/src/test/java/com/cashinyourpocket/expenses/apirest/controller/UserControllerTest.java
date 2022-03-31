@@ -5,6 +5,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.cashinyourpocket.expenses.apirest.dto.UserDataDto;
+import com.cashinyourpocket.expenses.apirest.dto.UserSecurityDto;
 import com.cashinyourpocket.expenses.application.service.UserService;
 import com.cashinyourpocket.expenses.application.user.JwtRequestFilter;
 import com.cashinyourpocket.expenses.data.model.UserJpa;
@@ -36,6 +38,15 @@ public class UserControllerTest {
 
     verify(usuariosService).getUser(USER);
     sut.getUser(httpServletRequest).getBody().equals(userSecurity);
+
+  }
+
+  @Test
+  public void addUserOK() {
+
+    sut.addUser();
+
+    sut.addUser().getBody().equals(UserDataDto.builder().build());
 
   }
 
