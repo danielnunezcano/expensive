@@ -46,13 +46,11 @@ public class JwtAuthenticationController {
 
     UserData userData = userService.loginUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-//    final UserData userData2 = UserMapper.userDetailstoUserData((UserDetails) userDetailsService
-//        .loadUserByUsername(authenticationRequest.getUsername()));
-
     final String token = jwtTokenUtil.generateToken(userData);
-    //ResponseEntity.of(Optional.of(UserMapper.toUserSecurityDto(usuariosService.getUser(userData.getUsername()))));
 
-    final AuthResponse response = AuthResponse.builder().userData(userData).jwt(new JwtResponse(token)).build();
+    final AuthResponse response = AuthResponse.builder()
+            .userData(UserMapper.toUserDataDto(userData))
+            .jwt(new JwtResponse(token)).build();
 
     return ResponseEntity.ok(response);
   }

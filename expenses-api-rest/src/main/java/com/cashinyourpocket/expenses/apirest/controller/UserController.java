@@ -31,4 +31,10 @@ public class UserController {
     final String user = jwtRequestFilter.getUser(request);
     return ResponseEntity.of(Optional.of(UserMapper.toUserSecurityDto(usuariosService.getUser(user))));
   }
+
+  @RequestMapping(value = "/user", method = RequestMethod.POST)
+  public ResponseEntity<UserSecurityDto> addUser(HttpServletRequest request) {
+    final String user = jwtRequestFilter.getUser(request);
+    return ResponseEntity.of(Optional.of(UserMapper.toUserSecurityDto(usuariosService.getUser(user))));
+  }
 }
