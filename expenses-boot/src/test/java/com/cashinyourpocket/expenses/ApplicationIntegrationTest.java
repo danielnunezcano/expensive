@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import com.cashinyourpocket.expenses.apirest.dto.AddUserRequestDto;
 import com.cashinyourpocket.expenses.application.user.model.JwtRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,30 @@ public class ApplicationIntegrationTest {
         .andReturn();
     String content = result.getResponse().getContentAsString();
     return ResponseTokenTest.builder().token(content.split("\"")[content.split("\"").length-2]).build();
+  }
+
+  @Test
+  public void shouldAddUser() throws Exception {
+
+    AddUserRequestDto request = AddUserRequestDto.builder()
+            .username("julian@gmail.com")
+            .name("Julian")
+            .surname("Fernandez")
+            .password("asdfgqwert")
+            .role(1)
+            .build();
+
+    final String jsonContent = objectMapper.writeValueAsString(request);
+    mockMvc.perform(post("/addUser")
+                    .content(jsonContent)
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.username").value(request.getUsername()))
+            .andExpect(jsonPath("$.name").value(request.getName()))
+            .andExpect(jsonPath("$.surname").value(request.getSurname()))
+            .andExpect(jsonPath("$.role").value(request.getRole()));
+    authentication(request.getUsername(), request.getPassword());
   }
 
 

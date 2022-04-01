@@ -5,10 +5,13 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.cashinyourpocket.expenses.application.user.model.UserData;
 import com.cashinyourpocket.expenses.data.model.UserJpa;
 import com.cashinyourpocket.expenses.data.repository.UserRepository;
 import com.cashinyourpocket.expenses.expections.CustomException;
+import com.cashinyourpocket.expenses.model.AddUserRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,6 +55,35 @@ public class UserServiceTest {
     } catch (CustomException ex) {
       Assertions.assertTrue(Boolean.TRUE);
     }
+
+  }
+
+  @Test
+  public void addUserOK() {
+    AddUserRequest addUserRequest = AddUserRequest.builder()
+            .username("daniel@gmail.com")
+            .name("Daniel")
+            .surname("Núñez")
+            .password("password")
+            .role(1)
+            .build();
+
+    UserJpa userJpa = UserJpa.builder()
+            .username("daniel@gmail.com")
+            .name("Daniel")
+            .surname("Núñez")
+            .role(1)
+            .build();
+
+    when(userRepository.save(any())).thenReturn(userJpa);
+
+    UserData userData = userService.addUser(addUserRequest);
+    Assertions.assertEquals(UserData.builder()
+            .username("daniel@gmail.com")
+            .name("Daniel")
+            .surname("Núñez")
+            .role(1)
+            .build(), userData);
 
   }
 

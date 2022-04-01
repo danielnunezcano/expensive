@@ -4,9 +4,9 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:mariadb://eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/a2uz1lfpgvt4f4iy
-    username: eop5t7cnjsxzbqtx
-    password: ur1nahpcrgx969kf
+    url: jdbc:mariadb://localhost:3306/EXPENSES
+    username: user
+    password: asdfgqwert
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
