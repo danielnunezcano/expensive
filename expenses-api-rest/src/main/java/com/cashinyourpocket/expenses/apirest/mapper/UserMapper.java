@@ -14,7 +14,7 @@ public class UserMapper {
   public static UserSecurityDto toUserSecurityDto(UserJpa model){
     return UserSecurityDto.builder().user(model.getUsername()).rol(model.getRole().toString()).build();
   }
-  // test git
+
   public static UserDataDto toUserDataDto (UserData userData){
     return UserDataDto.builder()
             .username(userData.getUsername())
