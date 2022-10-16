@@ -1,2 +1,16 @@
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/EXPENSES
+    username: user
+    password: asdfgqwert
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
 jwt:
   secret: tENePUDG8Zmt4HDcf8QpvcL7rAVKb4RtWzjkRtSfSs3iAqM6QUEHGMobuf2UZ3UwWtFMyY7gMUFjQMJcVN8FmmzRtXZgs4UWosKEj9q5eYQ9pUmRaAtVUyphFoBYVzag
